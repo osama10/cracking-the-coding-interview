@@ -1,3 +1,13 @@
+
+import Foundation
+
+func countChar(result: [String:  Int], char: String.Element) -> [String: Int] {
+    let key = String(char)
+    var dict = result
+    dict[key] = (dict[key] == nil) ? 1 : dict[key]! + 1
+    return dict
+}
+
 /// 1.1 Is Unique: Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?
 
 func isUnique(string: String) -> Bool {
@@ -36,12 +46,7 @@ func checkPermutation(string1: String, string2: String) -> Bool {
     return charCount1.allSatisfy { (key, value) in charCount2[key] == value }
 }
 
-func countChar(result: [String:  Int], char: String.Element) -> [String: Int] {
-    let key = String(char)
-    var dict = result
-    dict[key] = (dict[key] == nil) ? 1 : dict[key]! + 1
-    return dict
-}
+
 
 //print(checkPermutation(string1: "abc", string2: "bca"))
 //print(checkPermutation(string1: "abc", string2: "bcaa"))
@@ -55,4 +60,22 @@ func urlify(string: String) -> String {
 }
 
 print(urlify(string: "I   am a disco dancer "))
-print("checking")
+
+
+/// 1.4 Palindrome Permutation: Given a string, write a function to check if it is a permutation of a palindrome. A palindrome is a word or phrase that is the same forwards and backwards. A permutation is a rearrangement of letters. The palindrome does not need to be limited to just dictionary words.
+
+func palindromePermutation(string: String) -> Bool  {
+    let filteredString = string.replacingOccurrences(of: " ", with: "")
+    let charCountDict = filteredString.reduce([String: Int](), countChar)
+    var oddCount = 0
+    return charCountDict.allSatisfy { (key, value) in
+        if (value % 2 != 0) {
+            oddCount += 1
+        }
+        return (value % 2 == 0 || oddCount <= 1 )
+    }
+}
+
+print(palindromePermutation(string: "abcdeabdc"))
+print(palindromePermutation(string: "tact coap apa"))
+print(palindromePermutation(string: "tact coap ap"))
