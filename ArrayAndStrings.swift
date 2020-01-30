@@ -93,7 +93,6 @@ func palindromePermutation(string: String) -> Bool  {
 
 
 /// 1.5  One Away: There are three types of edits that can be performed on strings: insert a character, remove a character, or replace a character. Given two strings, write a function to check if they are one edit (or zero edits) away.
-
 func replacementCase(str1: String, str2: String) -> Bool {
     let replacement = str1.enumerated().reduce(0) { (result, val) in (str2[val.offset] == val.element) ? result + 0 : result + 1 }
     return (replacement <= 1)
@@ -120,3 +119,26 @@ func oneWay(string1: String, string2: String) -> Bool {
 //print(oneWay(string1: "pale", string2: "ple"))
 //print(oneWay(string1: "pale", string2: "pales"))
 //print(oneWay(string1: "pale", string2: "bale"))
+
+
+/// 1.6 String Compression: Implement a method to perform basic string compression using the counts of repeated characters. For example, the string aabcccccaaa would become a2blc5a3. If the "compressed" string would not become smaller than the original string, your method should return the original string. You can assume the string has only uppercase and lowercase letters (a - z).
+
+typealias TrackedSubject = (subject: String.Element, counter: Int)
+
+func compress(str: String) -> String {
+    var trackedSubject : TrackedSubject? = nil
+    var compressedString = ""
+    str.forEach { (value) in
+        if(trackedSubject == nil ) { trackedSubject = (value, 1) }
+        else if (trackedSubject!.subject == value ) { trackedSubject!.counter += 1 }
+        else {
+            compressedString +=  "\(trackedSubject!.subject)\(trackedSubject!.counter)"
+            trackedSubject = (value, 1)
+        }
+    }
+    compressedString += "\(trackedSubject!.subject)\(trackedSubject!.counter)"
+    return (compressedString.count < str.count) ? compressedString : str
+}
+
+print(compress(str: "a"))
+print(compress(str: "aabcccccaaa"))
