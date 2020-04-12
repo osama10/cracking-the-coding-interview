@@ -140,5 +140,41 @@ func compress(str: String) -> String {
     return (compressedString.count < str.count) ? compressedString : str
 }
 
-print(compress(str: "a"))
-print(compress(str: "aabcccccaaa"))
+//print(compress(str: "a"))
+//print(compress(str: "aabcccccaaa"))
+
+/// 1.8 Zero Matrix: Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0.
+
+func makeRowZero(arr: inout [[Int]], row: Int) {
+    for col in 0..<arr[row].count {
+        arr[row][col] = 0
+    }
+}
+
+func makeColZero(arr: inout [[Int]], col: Int) {
+    for row in 0..<arr.count {
+        arr[row][col] = 0
+    }
+}
+
+func setZero( arr: inout [[Int]]) {
+    var zeroRows = Set<Int>()
+    var zeroCols = Set<Int>()
+
+    for row in 0..<arr.count {
+        for col in 0..<arr[row].count {
+            if (arr[row][col] == 0) {
+                zeroRows.insert(row)
+                zeroCols.insert(col)
+            }
+        }
+    }
+
+    zeroRows.forEach { makeRowZero(arr: &arr, row: $0) }
+    zeroCols.forEach { makeColZero(arr: &arr, col: $0) }
+
+    print(arr)
+}
+
+//var arr = [[0, 0, 2], [3, 4, 5], [6, 7, 8]]
+//setZero(arr: &arr)
