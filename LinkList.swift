@@ -1,4 +1,13 @@
 
+class Node {
+    var data: Int
+    var next: Node?
+
+    init(data: Int, next: Node? = nil) {
+        self.data = data
+        self.next = next
+    }
+}
 
 ///2.1 Remove Dups: Write code to remove duplicates from an unsorted linked list.
 
