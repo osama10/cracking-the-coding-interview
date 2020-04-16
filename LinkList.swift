@@ -161,6 +161,40 @@ func sumList(list1: Node?, list2:  Node?)  ->  Int {
     }
     return Int("\(remainder)" + sum)!
 }
+/*
+2.6 Palindrome: Implement a function to check if a linked list is a palindrome.
+*/
+
+
+func palindrome(head: Node?) -> Bool {
+    var stack = [Int]()
+    var  slow = head
+    var fast = head
+
+    while fast != nil && fast?.next != nil {
+        stack.append(slow!.data)
+        fast = fast?.next?.next
+        slow = slow?.next
+    }
+
+    if fast !=  nil { slow  = slow?.next }
+
+    while slow != nil {
+        if stack.popLast() != slow!.data { return false }
+        slow = slow?.next
+    }
+
+    return true
+}
+
+//let tail = Node(data: 0)
+//let palNode1 = Node(data: 1, next: tail)
+//let palNode2 = Node(data: 2, next: palNode1)
+//let palNode3 = Node(data: 1, next: palNode2)
+//let head = Node(data: 0, next: palNode3)
+//
+//
+//print(palindrome(head: head))
 
 
 
