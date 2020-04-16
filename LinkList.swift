@@ -86,3 +86,81 @@ func delete(node: Node?) -> Bool {
     node.next = next.next
     return true
 }
+
+
+/*
+ 2.4
+ Partition: Write code to partition a linked list around a value x, such that all nodes less than x come before all nodes greater than or equal to x. If x is contained within the list the values of x only need to be after the elements less than x (see below). The partition element x can appear anywhere in the "right partition"; it does not need to appear between the left and right partitions.
+
+ EXAMPLE
+ Input: 3 -> 5 -> 8 5 -> 10 2 1[partition=5] Output: 3 -> 1 2 -> 10 -> 5 5 -> 8
+
+ */
+
+ func partition(linkList: Node, onValue value: Int) -> Node  {
+    var current : Node? = linkList
+    var leftHead : Node?
+    var currentLeft: Node?
+    var rightHead: Node?
+    var currentRight: Node?
+
+    while current !=  nil {
+        if current!.data < value {
+            let smallerNode =  Node(data: current!.data)
+            if (leftHead ==  nil) {
+                leftHead = smallerNode
+                currentLeft = smallerNode
+            }  else {
+                currentLeft?.next = smallerNode
+                currentLeft = smallerNode
+            }
+        } else {
+            let biggerNode =  Node(data: current!.data)
+            if (rightHead ==  nil) {
+                rightHead = biggerNode
+                currentRight = biggerNode
+            }  else {
+                currentRight?.next = biggerNode
+                currentRight = biggerNode
+            }
+        }
+        current = current?.next
+    }
+    currentLeft?.next = rightHead
+    return leftHead!
+}
+
+
+/*
+2.5 Sum Lists: You have two numbers represented by a linked list,where each node contains a single digit. The digits are stored in reverse order,such that the 1's digit is at the head of the list. Write a function that adds the two numbers and returns the sum as a linked list.
+EXAMPLE
+Input: (7-> 1 -> 6) + (5 -> 9 -> 2).That is,617 + 295. Output:2 -> 1 -> 9.Thatis,912.
+FOLLOW UP
+Suppose the digits are stored in forward order. Repeat the above problem. Input: (6 -> 1 -> 7) + (2 -> 9 -> 5).Thatis,617 + 295. Output:9 ->1 ->2.Thatis,912.
+*/
+
+func sumList(list1: Node?, list2:  Node?)  ->  Int {
+    var list1  =  list1
+    var list2 = list2
+    var remainder = 0
+    var sum = ""
+    while (list1 != nil  || list2 != nil) {
+        let newVal : Int
+        if list1 == nil {
+            newVal = list2!.data + remainder
+        }  else if list2 == nil {
+            newVal = list1!.data + remainder
+        } else  {
+            newVal  = list1!.data +  list2!.data + remainder
+        }
+        remainder = newVal / 10
+        sum = "\(newVal % 10)" + sum
+        list1 = list1?.next
+        list2 = list2?.next
+
+    }
+    return Int("\(remainder)" + sum)!
+}
+
+
+
