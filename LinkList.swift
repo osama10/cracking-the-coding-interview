@@ -9,6 +9,23 @@ class Node {
     }
 }
 
+extension Node {
+    class func createLinkList(from data: [Int]) -> Node {
+        data.dropLast()
+            .reversed()
+            .reduce(Node(data: data[data.count-1]))
+            { Node(data: $1, next: $0) }
+    }
+
+    class func printLinkList(head: Node?) {
+        var head = head
+        while head != nil {
+            print(head!.data)
+            head = head?.next
+        }
+    }
+}
+
 ///2.1 Remove Dups: Write code to remove duplicates from an unsorted linked list.
 
 func removeDups(head: Node?) {
@@ -197,4 +214,42 @@ func palindrome(head: Node?) -> Bool {
 //print(palindrome(head: head))
 
 
+/// 2.8 Loop Detection: Given a circular linked list, implement an algorithm that returns the node at the beginning of the loop. DEFINITION Circular linked list: A (corrupt) linked list in which a node's next pointer points to an earlier node, so as to make a loop in the linked list.
+
+/// EXAMPLE
+/// Input: 1 -> 2 -> 3 -> 4 -> 5 -> 2
+/// [thesameCasearlier] Output: 2
+
+
+func detectLoop(head: Node?) -> Node? {
+    var fast = head
+    var slow = head
+
+    while fast != nil && fast?.next != nil {
+        fast = fast?.next?.next
+        slow = slow?.next
+        if fast === slow { break }
+    }
+
+    if fast == nil || fast?.next == nil { return nil }
+
+    slow = head
+
+    while slow?.next !== fast?.next {
+        fast = fast?.next
+        slow = slow?.next
+    }
+    fast?.next = nil
+    return fast
+}
+
+
+//var node2 = Node(data: 5)
+//let node3 = Node(data: 4, next: node2)
+//let node4 = Node(data: 3, next: node3)
+//let node5 = Node(data: 2, next: node4)
+//var head1 : Node? = Node(data: 1, next: node5)
+//node2.next = node5
+//
+//print(detectLoop(head: head1)?.data ?? -1)
 
