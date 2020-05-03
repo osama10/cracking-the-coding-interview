@@ -253,3 +253,5 @@ func detectLoop(head: Node?) -> Node? {
 //
 //print(detectLoop(head: head1)?.data ?? -1)
 
+
+

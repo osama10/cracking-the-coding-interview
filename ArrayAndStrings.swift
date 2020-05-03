@@ -66,8 +66,10 @@ func checkPermutation(string1: String, string2: String) -> Bool {
 
 /// 1.3 URLify: Write a method to replace all spaces in a string with '%20'. You may assume that the string has sufficient space at the end to hold the additional characters, and that you are given the "true" length of the string.
 
-func urlify(string: String) -> String {
-    return string.reduce("") { (partialResult, char) in (String(char) == " ") ? partialResult + "%20" : partialResult + String(char)}
+func urlify(str: String) -> String {
+    str
+        .trimmingCharacters(in: .whitespaces)
+        .reduce("") { (String($1) == " ") ? $0 + "%20" : $0 + String($1) }
 }
 
 //print(urlify(string: "I   am a disco dancer "))
